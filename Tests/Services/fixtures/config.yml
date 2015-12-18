@@ -1,0 +1,2 @@
+cross_knowledge_device_detect:
+    cache_manager: crossknowledge.example_cache_override

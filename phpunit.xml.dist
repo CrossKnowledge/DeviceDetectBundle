@@ -1,0 +1,22 @@
+<phpunit bootstrap="./Tests/bootstrap.php" colors="true">
+    <logging>
+        <log type="junit" target="logs/unittests/alltests.xml" />
+    </logging>
+
+    <testsuites>
+        <testsuite name="CrossKnowledge DeviceDetect test suite">
+            <directory suffix="Test.php">./Tests</directory>
+        </testsuite>
+    </testsuites>
+
+    <filter>
+        <whitelist>
+            <directory>./</directory>
+            <exclude>
+                <directory>./Resources</directory>
+                <directory>./Tests</directory>
+                <directory>./vendor</directory>
+            </exclude>
+        </whitelist>
+    </filter>
+</phpunit>
