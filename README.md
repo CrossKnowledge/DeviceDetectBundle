@@ -1,3 +1,5 @@
+[![Scrutinizer Code Quality](https://scrutinizer-ci.com/g/CrossKnowledge/DeviceDetectBundle/badges/quality-score.png?b=master)](https://scrutinizer-ci.com/g/CrossKnowledge/DeviceDetectBundle/?branch=master) [![Code Coverage](https://scrutinizer-ci.com/g/CrossKnowledge/DeviceDetectBundle/badges/coverage.png?b=master)](https://scrutinizer-ci.com/g/CrossKnowledge/DeviceDetectBundle/?branch=master) [![Build Status](https://travis-ci.org/CrossKnowledge/DeviceDetectBundle.svg?branch=master)]
+
 CrossKnowledge DeviceDetect Bundle
 ==================================
 
