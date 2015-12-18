@@ -13,7 +13,11 @@
   "authors": [
     {
       "name": "Kevin Nguyen",
-      "email": "kevin.nguyen@gmail.com"
+      "email": "kevin.tuanhuy.nguyen@gmail.com"
+    },
+    {
+      "name": "Cyril Quintin",
+      "email": "cyril.quintin@gmail.com"
     }
   ],
   "autoload": {
