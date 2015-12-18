@@ -17,7 +17,7 @@ Documentation
 
 The source of the documentation is stored in the `Resources/doc/` folder
 
-[Read the Documentation for master](https://github.com/CrossKnowledge/DataTableBundle/blob/master/Resources/doc/index.md)
+[Read the Documentation for master](https://github.com/CrossKnowledge/DeviceDetectBundle/blob/master/Resources/doc/index.md)
 
 Installation
 ------------
