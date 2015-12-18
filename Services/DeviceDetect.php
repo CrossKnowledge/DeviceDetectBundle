@@ -33,10 +33,7 @@ class DeviceDetect
         }
 
         $this->deviceDetector = new \DeviceDetector\DeviceDetector($userAgent);
-
-        if ($cache instanceof Cache) {
-            $this->deviceDetector->setCache($this->getCacheManager());
-        }
+        $this->deviceDetector->setCache($this->getCacheManager());
 
         if (!empty($this->deviceDetectorOptions['discard_bot_information'])) {
             $this->deviceDetector->discardBotInformation();
