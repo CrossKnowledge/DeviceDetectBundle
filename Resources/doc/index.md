@@ -1,5 +1,5 @@
-CrossKnowledgeDataTableBundle
-================================
+CrossKnowledgeDeviceDetectBundleBundle
+======================================
 
 * [Installation](#installation)
 * [Usage](#usage)
