@@ -32,11 +32,15 @@ public function registerBundles()
 
 ```yaml
 cross_knowledge_device_detect:
+
+    # The service name that will handle caching (must implement Doctrine\Common\Cache\CacheProvider))
     cache_manager:        ~
+
     # Available options are discard_bot_information and skip_bot_detection which are booleans
     device_detector_options:
         discard_bot_information:  true
         skip_bot_detection:   true
+
 ```
 
 Usage

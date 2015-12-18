@@ -14,7 +14,7 @@ class Configuration implements ConfigurationInterface
 
         $rootNode
             ->children()
-                ->scalarNode('cache_manager')
+                ->scalarNode('cache_manager')->info('The service name that will handle caching (must implement Doctrine\Common\Cache\CacheProvider))')
                 ->end()
                 ->arrayNode('device_detector_options')
                     ->info("Available options are discard_bot_information and skip_bot_detection which are booleans")
