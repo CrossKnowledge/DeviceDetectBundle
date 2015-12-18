@@ -3,7 +3,6 @@
 namespace CrossKnowledge\DeviceDetectBundle\Services;
 
 use Symfony\Component\HttpFoundation\RequestStack;
-use Symfony\Component\HttpFoundation\Session\Session;
 use \Doctrine\Common\Cache\CacheProvider;
 
 class DeviceDetect
