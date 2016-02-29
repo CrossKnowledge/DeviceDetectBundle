@@ -10,11 +10,6 @@ services:
         tags:
             - { name: twig.extension }
 
-    crossknowledge.device_detector:
-        class: CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect
-        arguments: ["@request_stack", "@crossknowledge.default_cache_manager"]
-
-
     crossknowledge.device_detect:
         class: CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect
         arguments: ["@request_stack", "@crossknowledge.default_cache_manager"]

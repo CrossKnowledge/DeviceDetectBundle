@@ -73,4 +73,9 @@ class DeviceDetect
     {
         $this->deviceDetectorOptions = $deviceDetectorOptions;
     }
+
+    public function getDeviceDetector()
+    {
+        return $this->deviceDetector;
+    }
 }
