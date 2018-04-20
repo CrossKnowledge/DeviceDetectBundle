@@ -22,7 +22,7 @@ cache:
 before_install:
   - composer selfupdate
 
-install: composer update --prefer-dist --no-interaction $COMPOSER_FLAGS
+install: composer install --prefer-dist --no-interaction $COMPOSER_FLAGS
 
 script:
   - phpunit --coverage-text --coverage-clover=coverage.clover
