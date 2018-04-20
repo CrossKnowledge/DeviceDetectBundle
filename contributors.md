@@ -1,2 +1,0 @@
-Kevin Nguyen
-Cyril Quintin
