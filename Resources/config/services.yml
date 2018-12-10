@@ -2,7 +2,7 @@
 services:
     crossknowledge.default_cache_manager:
         class: Doctrine\Common\Cache\PhpFileCache
-        arguments: [%kernel.cache_dir%/devicedetect]
+        arguments: ["%kernel.cache_dir%/devicedetect"]
 
     crossknowledge.device_detect.twig.device_detect:
         class: CrossKnowledge\DeviceDetectBundle\Twig\DeviceDetectExtension
