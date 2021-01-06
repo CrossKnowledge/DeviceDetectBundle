@@ -33,6 +33,7 @@ Release Notes
 Change underlying library from piwik/device-detector to matomo/device-detector
 Minimum php version is 7.2
 Upgraded phpunit version to 8
+hhvm no more supported
 
 License
 -------

@@ -5,12 +5,10 @@ php:
   - 7.3
   - 7.4
   - 8.0
-  - hhvm
 
 matrix:
   fast_finish: true
   allow_failures:
-    - php: hhvm
     - php: 8.0
 
 sudo: false
