@@ -2,24 +2,25 @@
 
 namespace CrossKnowledge\DeviceDetectBundle\Services;
 
+use DeviceDetector\DeviceDetector;
 use Symfony\Component\HttpFoundation\RequestStack;
-use \Doctrine\Common\Cache\CacheProvider;
+use DeviceDetector\Cache\CacheInterface;
 
 class DeviceDetect
 {
     /** @var RequestStack */
     protected $requestStack;
 
-    /** @var \DeviceDetector\DeviceDetector */
+    /** @var DeviceDetector */
     protected $deviceDetector;
 
-    /** @var Cache */
+    /** @var CacheInterface */
     protected $cacheManager;
 
-    /** @var  [] */
+    /** @var []|null */
     protected $deviceDetectorOptions;
 
-    public function __construct(RequestStack $stack, CacheProvider $cache, $deviceDetectorOptions)
+    public function __construct(RequestStack $stack, CacheInterface $cache, $deviceDetectorOptions)
     {
         $this->cacheManager = $cache;
         $this->requestStack = $stack;
@@ -28,10 +29,11 @@ class DeviceDetect
         if (null !== $this->requestStack && $this->requestStack->getCurrentRequest()) {
             $userAgent = $this->requestStack->getCurrentRequest()->headers->get('User-Agent');
         } else {
-            $userAgent = '';
+            // Symfony Bug ? in case of symfony event, request stack is lost
+            $userAgent = $_SERVER['HTTP_USER_AGENT'] ?? '';
         }
 
-        $this->deviceDetector = new \DeviceDetector\DeviceDetector($userAgent);
+        $this->deviceDetector = new DeviceDetector($userAgent);
         $this->deviceDetector->setCache($this->getCacheManager());
 
         if (!empty($this->deviceDetectorOptions['discard_bot_information'])) {
@@ -45,12 +47,18 @@ class DeviceDetect
         $this->deviceDetector->parse();
     }
 
-    public function isTablet()
+    /**
+     * @return bool
+     */
+    public function isTablet(): bool
     {
         return $this->deviceDetector->isTablet();
     }
 
-    public function isMobile()
+    /**
+     * @return bool
+     */
+    public function isMobile(): bool
     {
         if ($this->deviceDetector->isTablet()) {
             return false;
@@ -59,22 +67,31 @@ class DeviceDetect
         return $this->deviceDetector->isMobile();
     }
 
-    public function isDesktop()
+    /**
+     * @return bool
+     */
+    public function isDesktop(): bool
     {
         return $this->deviceDetector->isDesktop();
     }
 
-    public function getCacheManager()
+    /**
+     * @return CacheInterface
+     */
+    public function getCacheManager(): CacheInterface
     {
         return $this->cacheManager;
     }
 
-    public function setOptions($deviceDetectorOptions)
+    /**
+     * @param array|null $deviceDetectorOptions
+     */
+    public function setOptions(?array $deviceDetectorOptions): void
     {
         $this->deviceDetectorOptions = $deviceDetectorOptions;
     }
 
-    public function getDeviceDetector()
+    public function getDeviceDetector(): DeviceDetector
     {
         return $this->deviceDetector;
     }

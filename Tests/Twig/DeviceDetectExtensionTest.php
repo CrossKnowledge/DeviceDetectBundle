@@ -1,51 +1,69 @@
 <?php
 
-namespace CrossKnowledge\DeviceDetectBundle\Tests\Services;
+namespace CrossKnowledge\DeviceDetectBundle\Tests\Twig;
 
-use CrossKnowledge\DeviceDetectBundle\DependencyInjection\CrossKnowledgeDeviceDetectExtension;
 use CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect;
 use CrossKnowledge\DeviceDetectBundle\Twig\DeviceDetectExtension;
+use PHPUnit\Framework\AssertionFailedError;
+use PHPUnit\Framework\MockObject\MockObject;
+use PHPUnit\Framework\TestCase;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
 
-class DeviceDetectExtensionTest extends \PHPUnit_Framework_TestCase
+class DeviceDetectExtensionTest extends TestCase
 {
-
-    public function getDetector()
-    {
-        $detectorMock = $this->getMockBuilder(DeviceDetect::class)
-                             ->disableOriginalConstructor()
-                             ->getMock();
-
-        return $detectorMock;
-    }
-
-    protected function getFunctionByName(\Twig_Extension $extension, $name)
-    {
-        foreach ($extension->getFunctions() as $function) {
-            if ($function->getName()==$name) {
-                return $function;
-            }
-        }
-    }
 
     /**
      * @dataProvider extensionFunctions
+     * @param string $function
+     * @param bool $expected
+     * @param string $detectorMethod
      */
-    public function testIsTablet($function, $expected, $detectorMethod)
+    public function testIsTablet(string $function, bool $expected, string $detectorMethod): void
     {
         $mock = $this->getDetector();
 
+        /* @var $ext */
+        /** @noinspection PhpParamsInspection */
         $ext = new DeviceDetectExtension($mock);
 
-        $mock->expects($this->once())->method($detectorMethod)
-             ->will($this->returnValue($expected));
+        $mock->expects(self::once())
+            ->method($detectorMethod)
+            ->willReturn($expected);
 
         $function = $this->getFunctionByName($ext, $function);
-        $this->assertNotNull($function);
+        self::assertNotNull($function);
 
-        $this->assertEquals(call_user_func($function->getCallable()), $expected);
+        self::assertEquals(call_user_func($function->getCallable()), $expected);
     }
 
-    public function extensionFunctions()
+    /**
+     * @return MockObject
+     */
+    public function getDetector(): MockObject
+    {
+        return $this->getMockBuilder(DeviceDetect::class)
+            ->disableOriginalConstructor()
+            ->getMock();
+    }
+
+    /**
+     * @param AbstractExtension $extension
+     * @param string $name
+     * @return TwigFunction
+     */
+    protected function getFunctionByName(AbstractExtension $extension, string $name): TwigFunction
+    {
+        foreach ($extension->getFunctions() as $function) {
+            if ($function->getName() === $name) {
+                return $function;
+            }
+        }
+
+        throw new AssertionFailedError("missing extension function : $name");
+    }
+
+    public function extensionFunctions(): array
     {
         return [
             ['is_tablet', true, 'isTablet'],

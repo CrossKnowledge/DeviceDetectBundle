@@ -1,34 +1,30 @@
 {
   "name": "crossknowledge/devicedetect-bundle",
-  "description": "piwik/device-detector wrapped for Symfony2",
+  "description": "matomo/device-detector wrapped for Symfony2",
   "type": "symfony-bundle",
   "license": "MIT",
   "keywords": [
     "Device detect",
-    "piwik device-detector",
+    "matomo device-detector",
     "bundle",
     "Symfony",
     "Symfony2"
   ],
   "authors": [
     {
-      "name": "Kevin Nguyen",
-      "email": "kevin.tuanhuy.nguyen@gmail.com"
-    },
-    {
-      "name": "Cyril Quintin",
-      "email": "cyril.quintin@gmail.com"
+      "name": "CrossKnowledge"
     }
   ],
   "autoload": {
     "psr-4": { "CrossKnowledge\\DeviceDetectBundle\\": "" }
   },
   "require": {
-    "php": ">=5.5",
-    "symfony/symfony": ">=2.6 <3.0",
-    "piwik/device-detector": "^3.4"
+    "php": ">=7.2",
+    "symfony/symfony": "^3.4",
+    "matomo/device-detector": "^4.0"
   },
   "require-dev": {
-    "phpunit/phpunit": "~3.7"
+    "phpunit/phpunit": "^8",
+    "roave/security-advisories": "dev-master"
   }
 }

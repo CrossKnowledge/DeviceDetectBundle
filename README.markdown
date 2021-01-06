@@ -3,7 +3,7 @@
 CrossKnowledge DeviceDetect Bundle
 ==================================
 
-The CrossKnowledge/DeviceDetectBundle wraps piwik/device-detector with semantic D.I configuration and twig helpers.
+The CrossKnowledge/DeviceDetectBundle wraps matomo/device-detector with semantic D.I. configuration and twig helpers.
 
 Features:
 
@@ -26,6 +26,14 @@ Installation
 
 All the installation instructions are located in the documentation.
 
+Release Notes
+-------------
+
+## V2.0 (2020-01-06) 
+Change underlying library from piwik/device-detector to matomo/device-detector
+Minimum php version is 7.2
+Upgraded phpunit version to 8
+
 License
 -------
 
@@ -38,7 +46,7 @@ About
 
 CrossKnowledgeDeviceDetectBundle is a [CrossKnowledge](https://crossknowledge.com) initiative.
 See also the list of [contributors](https://github.com/CrossKnowledge/DeviceDetectBundle/contributors).
-A couple of "distribution" (travis,readme.md, etc..) files are inspired from FriendsOfSymfony/FOSUserBundle's.
+A couple of "distribution" (travis,readme.md, etc.) files are inspired from FriendsOfSymfony/FOSUserBundle's.
 
 Contributions
 -------------

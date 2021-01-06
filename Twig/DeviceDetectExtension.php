@@ -2,41 +2,45 @@
 
 namespace CrossKnowledge\DeviceDetectBundle\Twig;
 
+use CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect;
+use Twig\Extension\AbstractExtension;
+use Twig\TwigFunction;
+
 class DeviceDetectExtension
-	extends \Twig_Extension
+	extends AbstractExtension
 {
 	private $deviceDetect;
 
-	public function __construct(\CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect $detector)
+	public function __construct(DeviceDetect $detector)
 	{
 		$this->deviceDetect = $detector;
 	}
 
-	public function getFunctions()
+	public function getFunctions(): array
 	{
 		return [
-			new \Twig_SimpleFunction('is_tablet', array($this, 'isTablet')),
-			new \Twig_SimpleFunction('is_mobile', array($this, 'isMobile')),
-			new \Twig_SimpleFunction('is_desktop', array($this, 'isDesktop'))
+			new TwigFunction('is_tablet', array($this, 'isTablet')),
+			new TwigFunction('is_mobile', array($this, 'isMobile')),
+			new TwigFunction('is_desktop', array($this, 'isDesktop'))
 		];
 	}
 
-	public function isTablet()
-	{
+	public function isTablet(): bool
+    {
 		return $this->deviceDetect->isTablet();
 	}
 
-	public function isMobile()
+	public function isMobile(): bool
 	{
 		return $this->deviceDetect->isMobile();
 	}
 
-	public function isDesktop()
+	public function isDesktop(): bool
 	{
 		return $this->deviceDetect->isDesktop();
 	}
 
-	public function getName()
+	public function getName(): string
 	{
 		return 'device_detect';
 	}
