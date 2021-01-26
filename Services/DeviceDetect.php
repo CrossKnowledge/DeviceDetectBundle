@@ -20,10 +20,24 @@ class DeviceDetect
     /** @var []|null */
     protected $deviceDetectorOptions;
 
+    /** @var string we save here user agent as $_SERVER['HTTP_USER_AGENT'] could be lost when using symfony events */
+    protected $userAgent;
+
+    /**
+     * user agent deduced from requestStack or $_SERVER['HTTP_USER_AGENT'] if not available
+     * '' if no user agent found
+     */
     public function __construct(RequestStack $stack, CacheInterface $cache, $deviceDetectorOptions)
     {
         $this->cacheManager = $cache;
         $this->requestStack = $stack;
+        if (null !== $this->requestStack && $this->requestStack->getCurrentRequest()) {
+            $this->userAgent = $this->requestStack->getCurrentRequest()->headers->get('User-Agent') ?? '';
+        }
+        // Symfony Bug, in case of symfony event, request stack is lost
+        if (empty($this->userAgent)) {
+            $this->userAgent = @$_SERVER['HTTP_USER_AGENT'] ?? '';
+        }
         $this->setOptions($deviceDetectorOptions);
     }
 
@@ -76,12 +90,7 @@ class DeviceDetect
      * '' if no user agent found
      */
     protected function getUserAgent(): string {
-        if (null !== $this->requestStack && $this->requestStack->getCurrentRequest()) {
-            return $this->requestStack->getCurrentRequest()->headers->get('User-Agent') ?? '';
-        }
-
-        // Symfony Bug ? in case of symfony event, request stack is lost
-        return $_SERVER['HTTP_USER_AGENT'] ?? '';
+       return $this->userAgent;
     }
 
     /**
