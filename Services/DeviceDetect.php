@@ -2,36 +2,106 @@
 
 namespace CrossKnowledge\DeviceDetectBundle\Services;
 
+use DeviceDetector\DeviceDetector;
 use Symfony\Component\HttpFoundation\RequestStack;
-use \Doctrine\Common\Cache\CacheProvider;
+use DeviceDetector\Cache\CacheInterface;
 
 class DeviceDetect
 {
     /** @var RequestStack */
     protected $requestStack;
 
-    /** @var \DeviceDetector\DeviceDetector */
+    /** @var DeviceDetector */
     protected $deviceDetector;
 
-    /** @var Cache */
+    /** @var CacheInterface */
     protected $cacheManager;
 
-    /** @var  [] */
+    /** @var []|null */
     protected $deviceDetectorOptions;
 
-    public function __construct(RequestStack $stack, CacheProvider $cache, $deviceDetectorOptions)
+    /** @var string we save here user agent as $_SERVER['HTTP_USER_AGENT'] could be lost when using symfony events */
+    protected $userAgent;
+
+    /**
+     * user agent deduced from requestStack or $_SERVER['HTTP_USER_AGENT'] if not available
+     * '' if no user agent found
+     */
+    public function __construct(RequestStack $stack, CacheInterface $cache, $deviceDetectorOptions)
     {
         $this->cacheManager = $cache;
         $this->requestStack = $stack;
-        $this->setOptions($deviceDetectorOptions);
-
         if (null !== $this->requestStack && $this->requestStack->getCurrentRequest()) {
-            $userAgent = $this->requestStack->getCurrentRequest()->headers->get('User-Agent');
-        } else {
-            $userAgent = '';
+            $this->userAgent = $this->requestStack->getCurrentRequest()->headers->get('User-Agent') ?? '';
+        }
+        // Symfony Bug, in case of symfony event, request stack is lost
+        if (empty($this->userAgent)) {
+            $this->userAgent = @$_SERVER['HTTP_USER_AGENT'] ?? '';
+        }
+        $this->setOptions($deviceDetectorOptions);
+    }
+
+    /**
+     * @return bool
+     */
+    public function isTablet(): bool
+    {
+        return $this->getDeviceDetector()->isTablet();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isMobile(): bool
+    {
+        if ($this->getDeviceDetector()->isTablet()) {
+            return false;
         }
 
-        $this->deviceDetector = new \DeviceDetector\DeviceDetector($userAgent);
+        return $this->getDeviceDetector()->isMobile();
+    }
+
+    /**
+     * @return bool
+     */
+    public function isDesktop(): bool
+    {
+        return $this->getDeviceDetector()->isDesktop();
+    }
+
+    /**
+     * @return CacheInterface
+     */
+    public function getCacheManager(): CacheInterface
+    {
+        return $this->cacheManager;
+    }
+
+    /**
+     * @param array|null $deviceDetectorOptions
+     */
+    public function setOptions(?array $deviceDetectorOptions): void
+    {
+        $this->deviceDetectorOptions = $deviceDetectorOptions;
+    }
+
+    /**
+     * @return string user agent deduced from requestStack or $_SERVER['HTTP_USER_AGENT'] if not available
+     * '' if no user agent found
+     */
+    protected function getUserAgent(): string {
+       return $this->userAgent;
+    }
+
+    /**
+     * Lazy loading of DeviceDetector
+     * @return DeviceDetector
+     */
+    public function getDeviceDetector(): DeviceDetector {
+        if (null !== $this->deviceDetector) {
+            return $this->deviceDetector;
+        }
+        $this->deviceDetector = new DeviceDetector($this->getUserAgent());
         $this->deviceDetector->setCache($this->getCacheManager());
 
         if (!empty($this->deviceDetectorOptions['discard_bot_information'])) {
@@ -43,39 +113,7 @@ class DeviceDetect
         }
 
         $this->deviceDetector->parse();
-    }
 
-    public function isTablet()
-    {
-        return $this->deviceDetector->isTablet();
-    }
-
-    public function isMobile()
-    {
-        if ($this->deviceDetector->isTablet()) {
-            return false;
-        }
-
-        return $this->deviceDetector->isMobile();
-    }
-
-    public function isDesktop()
-    {
-        return $this->deviceDetector->isDesktop();
-    }
-
-    public function getCacheManager()
-    {
-        return $this->cacheManager;
-    }
-
-    public function setOptions($deviceDetectorOptions)
-    {
-        $this->deviceDetectorOptions = $deviceDetectorOptions;
-    }
-
-    public function getDeviceDetector()
-    {
         return $this->deviceDetector;
     }
 }
