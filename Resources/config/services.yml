@@ -15,5 +15,6 @@ services:
             - { name: twig.extension }
 
     crossknowledge.device_detect:
+        public: true
         class: CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect
         arguments: ["@request_stack", "@crossknowledge.default_cache_manager_bridge"]
