@@ -9,10 +9,9 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cross_knowledge_device_detect');
+        $treeBuilder = new TreeBuilder('cross_knowledge_device_detect');
 
-        $rootNode
+        $treeBuilder->getRootNode()
             ->children()
                 ->scalarNode('cache_manager')->info('The service name that will handle caching (must implement Doctrine\Common\Cache\CacheProvider))')
                 ->end()
