@@ -20,11 +20,12 @@
   },
   "require": {
     "php": ">=7.2",
-    "symfony/symfony": "^3.4",
-    "matomo/device-detector": "^4.0"
+    "matomo/device-detector": "^4.0",
+    "symfony/symfony": "^4.0"
   },
   "require-dev": {
     "phpunit/phpunit": "^8",
-    "roave/security-advisories": "dev-master"
+    "roave/security-advisories": "dev-master",
+    "symfony/phpunit-bridge": "^6"
   }
 }
