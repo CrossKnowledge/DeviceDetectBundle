@@ -101,7 +101,7 @@ class DeviceDetect
         if (null !== $this->deviceDetector) {
             return $this->deviceDetector;
         }
-        $this->deviceDetector = new DeviceDetector($this->getUserAgent());
+        $this->deviceDetector = new CkDeviceDetector($this->getUserAgent());
         $this->deviceDetector->setCache($this->getCacheManager());
 
         if (!empty($this->deviceDetectorOptions['discard_bot_information'])) {
