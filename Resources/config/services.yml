@@ -18,7 +18,11 @@ services:
 
   crossknowledge.device_detect:
     class: CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect
-    public: true
+    public: false
     arguments:
       - "@request_stack"
       - "@crossknowledge.default_cache_manager_bridge"
+
+  CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect:
+    alias: crossknowledge.device_detect
+    public: true
