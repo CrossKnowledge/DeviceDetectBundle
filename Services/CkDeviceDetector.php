@@ -4,6 +4,8 @@ namespace CrossKnowledge\DeviceDetectBundle\Services;
 
 use DeviceDetector\DeviceDetector;
 use DeviceDetector\Parser\Client\Browser;
+use DeviceDetector\Parser\Client\MobileApp;
+
 
 class CkDeviceDetector extends DeviceDetector
 {
@@ -19,6 +21,8 @@ class CkDeviceDetector extends DeviceDetector
         }
 
         $this->addClientParser(new Browser());
+        $this->addClientParser(new MobileApp());
+
 
         // We just want to know the browser (Internet Explorer)
         // or if we are on a mobile or tablet
