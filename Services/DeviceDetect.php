@@ -89,15 +89,17 @@ class DeviceDetect
      * @return string user agent deduced from requestStack or $_SERVER['HTTP_USER_AGENT'] if not available
      * '' if no user agent found
      */
-    protected function getUserAgent(): string {
-       return $this->userAgent;
+    protected function getUserAgent(): string
+    {
+        return $this->userAgent;
     }
 
     /**
      * Lazy loading of DeviceDetector
      * @return DeviceDetector
      */
-    public function getDeviceDetector(): DeviceDetector {
+    public function getDeviceDetector(): DeviceDetector
+    {
         if (null !== $this->deviceDetector) {
             return $this->deviceDetector;
         }

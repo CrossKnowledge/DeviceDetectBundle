@@ -1,27 +1,27 @@
 services:
-  crossknowledge.default_cache_manager:
-    class: Doctrine\Common\Cache\PhpFileCache
-    arguments:
-      - "%kernel.cache_dir%/devicedetect"
+    crossknowledge.default_cache_manager:
+        class: Doctrine\Common\Cache\PhpFileCache
+        arguments:
+            - "%kernel.cache_dir%/devicedetect"
 
-  crossknowledge.default_cache_manager_bridge:
-    class: DeviceDetector\Cache\DoctrineBridge
-    arguments:
-      - "@crossknowledge.default_cache_manager"
+    crossknowledge.default_cache_manager_bridge:
+        class: DeviceDetector\Cache\DoctrineBridge
+        arguments:
+            - "@crossknowledge.default_cache_manager"
 
-  crossknowledge.device_detect.twig.device_detect:
-    class: CrossKnowledge\DeviceDetectBundle\Twig\DeviceDetectExtension
-    arguments:
-      - "@crossknowledge.device_detect"
-    tags:
-      - { name: twig.extension }
+    crossknowledge.device_detect.twig.device_detect:
+        class: CrossKnowledge\DeviceDetectBundle\Twig\DeviceDetectExtension
+        arguments:
+            - "@crossknowledge.device_detect"
+        tags:
+            - { name: twig.extension }
 
-  CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect:
-    public: false
-    arguments:
-      - "@request_stack"
-      - "@crossknowledge.default_cache_manager_bridge"
+    CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect:
+        public: false
+        arguments:
+            - "@request_stack"
+            - "@crossknowledge.default_cache_manager_bridge"
 
-  crossknowledge.device_detect:
-    alias: CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect
-    public: true
+    crossknowledge.device_detect:
+        alias: CrossKnowledge\DeviceDetectBundle\Services\DeviceDetect
+        public: true
