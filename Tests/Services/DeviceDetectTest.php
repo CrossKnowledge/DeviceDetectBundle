@@ -90,7 +90,7 @@ class DeviceDetectTest extends TestCase
     public function testCacheManagerDefaultIsOverridable(bool $configLoaded, string $expectedServiceName): void
     {
         $container = $this->createContainer($configLoaded);
-        $definition = $container->getDefinition('crossknowledge.device_detect');
+        $definition = $container->findDefinition('crossknowledge.device_detect');
         $arguments = $definition->getArguments();
 
         self::assertEquals(

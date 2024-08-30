@@ -16,6 +16,7 @@ class CkDeviceDetector extends DeviceDetector
      */
     public function __construct(string $userAgent = '')
     {
+        parent::__construct($userAgent);
         if ('' !== $userAgent) {
             $this->setUserAgent($userAgent);
         }
