@@ -2,7 +2,7 @@
 
 namespace CrossKnowledge\DeviceDetectBundle\Services;
 
-use DeviceDetector\DeviceDetector;
+use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use DeviceDetector\Cache\CacheInterface;
 
@@ -11,7 +11,7 @@ class DeviceDetect
     /** @var RequestStack */
     protected $requestStack;
 
-    /** @var DeviceDetector */
+    /** @var CkDeviceDetector */
     protected $deviceDetector;
 
     /** @var CacheInterface */
@@ -43,6 +43,7 @@ class DeviceDetect
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function isTablet(): bool
     {
@@ -51,6 +52,7 @@ class DeviceDetect
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function isMobile(): bool
     {
@@ -63,6 +65,7 @@ class DeviceDetect
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function isDesktop(): bool
     {
@@ -96,9 +99,10 @@ class DeviceDetect
 
     /**
      * Lazy loading of DeviceDetector
-     * @return DeviceDetector
+     * @return CkDeviceDetector
+     * @throws Exception
      */
-    public function getDeviceDetector(): DeviceDetector
+    public function getDeviceDetector(): CkDeviceDetector
     {
         if (null !== $this->deviceDetector) {
             return $this->deviceDetector;
