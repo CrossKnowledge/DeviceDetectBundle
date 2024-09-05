@@ -12,7 +12,7 @@ class DeviceDetect
     /** @var RequestStack */
     protected $requestStack;
 
-    /** @var CkDeviceDetector */
+    /** @var DeviceDetector */
     protected $deviceDetector;
 
     /** @var CacheInterface */
