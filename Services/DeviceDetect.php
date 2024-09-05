@@ -2,6 +2,7 @@
 
 namespace CrossKnowledge\DeviceDetectBundle\Services;
 
+use DeviceDetector\DeviceDetector;
 use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use DeviceDetector\Cache\CacheInterface;
@@ -99,10 +100,10 @@ class DeviceDetect
 
     /**
      * Lazy loading of DeviceDetector
-     * @return CkDeviceDetector
+     * @return DeviceDetector
      * @throws Exception
      */
-    public function getDeviceDetector(): CkDeviceDetector
+    public function getDeviceDetector(): DeviceDetector
     {
         if (null !== $this->deviceDetector) {
             return $this->deviceDetector;
