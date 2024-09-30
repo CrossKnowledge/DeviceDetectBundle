@@ -3,6 +3,7 @@
 namespace CrossKnowledge\DeviceDetectBundle\Services;
 
 use DeviceDetector\DeviceDetector;
+use Exception;
 use Symfony\Component\HttpFoundation\RequestStack;
 use DeviceDetector\Cache\CacheInterface;
 
@@ -43,6 +44,7 @@ class DeviceDetect
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function isTablet(): bool
     {
@@ -51,6 +53,7 @@ class DeviceDetect
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function isMobile(): bool
     {
@@ -63,6 +66,7 @@ class DeviceDetect
 
     /**
      * @return bool
+     * @throws Exception
      */
     public function isDesktop(): bool
     {
@@ -89,15 +93,18 @@ class DeviceDetect
      * @return string user agent deduced from requestStack or $_SERVER['HTTP_USER_AGENT'] if not available
      * '' if no user agent found
      */
-    protected function getUserAgent(): string {
-       return $this->userAgent;
+    protected function getUserAgent(): string
+    {
+        return $this->userAgent;
     }
 
     /**
      * Lazy loading of DeviceDetector
      * @return DeviceDetector
+     * @throws Exception
      */
-    public function getDeviceDetector(): DeviceDetector {
+    public function getDeviceDetector(): DeviceDetector
+    {
         if (null !== $this->deviceDetector) {
             return $this->deviceDetector;
         }

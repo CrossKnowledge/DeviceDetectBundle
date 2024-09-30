@@ -9,12 +9,14 @@ class Configuration implements ConfigurationInterface
 {
     public function getConfigTreeBuilder()
     {
-        $treeBuilder = new TreeBuilder();
-        $rootNode = $treeBuilder->root('cross_knowledge_device_detect');
+        $treeBuilder = new TreeBuilder('cross_knowledge_device_detect');
+        $rootNode = $treeBuilder->getRootNode();
 
         $rootNode
             ->children()
-                ->scalarNode('cache_manager')->info('The service name that will handle caching (must implement Doctrine\Common\Cache\CacheProvider))')
+                ->scalarNode('cache_manager')->info(
+                'The service name that will handle caching (must implement Doctrine\Common\Cache\CacheProvider))'
+                )
                 ->end()
                 ->arrayNode('device_detector_options')
                     ->info("Available options are discard_bot_information and skip_bot_detection which are booleans")

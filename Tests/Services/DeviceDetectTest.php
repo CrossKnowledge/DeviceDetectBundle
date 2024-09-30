@@ -24,17 +24,17 @@ class DeviceDetectTest extends TestCase
     protected function createContainer($loadAppFile): ContainerBuilder
     {
         $extension = new CrossKnowledgeDeviceDetectExtension();
-        $container = new ContainerBuilder(new ParameterBag(['kernel.cache_dir' => __DIR__.'/fixtures']));
+        $container = new ContainerBuilder(new ParameterBag(['kernel.cache_dir' => __DIR__ . '/fixtures']));
         $container->registerExtension($extension);
 
         if ($loadAppFile) {
-            $loader = new YamlFileLoader($container, new FileLocator(__DIR__.'/fixtures'));
+            $loader = new YamlFileLoader($container, new FileLocator(__DIR__ . '/fixtures'));
             $loader->load('config.yml');
         } else {
             $extension->load([], $container);
         }
 
-        $container->getCompilerPassConfig()->setRemovingPasses(array());
+        $container->getCompilerPassConfig()->setRemovingPasses([]);
         $container->compile();
 
         return $container;
@@ -62,7 +62,7 @@ class DeviceDetectTest extends TestCase
         return [
             ['Mozilla/4.0 (compatible; MSIE 6.0; Windows NT 5.1)', true, false, false],
             ['Mozilla/5.0 (Linux; Android 7.0; SM-G930V Build/NRD90M)', false, true, false],
-            ['Mozilla/5.0 (Linux; Android 4.4.3; KFTHWI Build/KTU84M)', false, false, true]
+            ['Mozilla/5.0 (Linux; Android 4.4.3; KFTHWI Build/KTU84M)', false, false, true],
         ];
     }
 
@@ -90,13 +90,13 @@ class DeviceDetectTest extends TestCase
     public function testCacheManagerDefaultIsOverridable(bool $configLoaded, string $expectedServiceName): void
     {
         $container = $this->createContainer($configLoaded);
-        $definition = $container->getDefinition('crossknowledge.device_detect');
+        $definition = $container->findDefinition('crossknowledge.device_detect');
         $arguments = $definition->getArguments();
 
         self::assertEquals(
             $expectedServiceName,
             (string)$arguments[1],
-            'Once the option cache_manager is '.($configLoaded ? 'set' : 'not set').', the service must be overridden'
+            'Once the option cache_manager is ' . ($configLoaded ? 'set' : 'not set') . ', the service must be overridden'
         );
     }
 
@@ -106,9 +106,9 @@ class DeviceDetectTest extends TestCase
      * @dataProvider userAgentProvider
      *
      * @param string $userAgent
-     * @param bool   $isDesktop
-     * @param bool   $isMobile
-     * @param bool   $isTablet
+     * @param bool $isDesktop
+     * @param bool $isMobile
+     * @param bool $isTablet
      */
     public function testUserAgentDetector(string $userAgent, bool $isDesktop, bool $isMobile, bool $isTablet): void
     {
