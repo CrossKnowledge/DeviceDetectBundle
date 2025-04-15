@@ -19,7 +19,7 @@
     "psr-4": { "CrossKnowledge\\DeviceDetectBundle\\": "" }
   },
   "require": {
-    "php": ">=7.2",
+    "php": ">=7.2.5",
     "matomo/device-detector": "^6.3.2",
     "symfony/flex": "^1.0",
     "symfony/http-kernel": "^5.4",
